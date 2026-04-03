@@ -1,6 +1,9 @@
 # Conductive-Circuit-Precision-Trainer
 A hardware-based precision game utilizing a closed-loop conductive circuit to provide real-time haptic and auditory feedback
 
+![operationgif](https://github.com/user-attachments/assets/b3af5957-b740-4bfd-b342-a7272c4054d5)
+
+
 Overview
 This project is a classic "Operation" style game built to demonstrate basic circuit completion logic. The system uses a set of tweezers as a probe and a copper-lined "track." When the probe touches the track, the circuit completes, triggering a microcontroller to activate an auditory alarm (buzzer).
 
@@ -34,3 +37,34 @@ Lessons Learned
 Debouncing: I learned that physical contact can be "noisy," sometimes causing the buzzer to stutter. I implemented a small software delay (debounce) to ensure a clean, consistent sound.
 
 Conductivity: Testing different metals for the "track" to ensure the lowest resistance for an immediate trigger.
+
+Circuit
+
+<img width="788" height="630" alt="image" src="https://github.com/user-attachments/assets/f9e09a1a-33c6-4573-8646-ded83f460217" />
+
+
+Code
+
+```cpp
+
+const int touchPin = 2;
+const int buzzerPin = 13;
+
+void setup(){
+  Serial.begin(9600);
+  pinMode(touchPin, INPUT_PULLUP);
+  pinMode(buzzerPin, OUTPUT);
+}
+
+void loop(){
+  int state = digitalRead(touchPin);
+
+  if (state == LOW){
+      delay(50);
+      digitalWrite(buzzerPin, HIGH);
+  }else{
+    digitalWrite(buzzerPin, LOW);
+  }
+}
+
+```
