@@ -4,30 +4,32 @@ A hardware-based precision game utilizing a closed-loop conductive circuit to pr
 ![operationgif](https://github.com/user-attachments/assets/b3af5957-b740-4bfd-b342-a7272c4054d5)
 
 
-Overview
-This project is a classic "Operation" style game built to demonstrate basic circuit completion logic. The system uses a set of tweezers as a probe and a copper-lined "track." When the probe touches the track, the circuit completes, triggering a microcontroller to activate an auditory alarm (buzzer).
+📝 Overview
+This project is a modern take on the classic "Operation" style game, designed to demonstrate fundamental circuit completion and microcontroller logic. The system utilizes a pair of conductive tweezers as a probe and a custom copper-lined "track."
 
-Technical Components
+When the user’s hand slips and the probe contacts the track, the circuit completes, triggering a high-frequency auditory alarm via an active piezo buzzer.
+
+🛠️ Technical Components
 Microcontroller: ELEGOO UNO R3
 
-Input: Conductive tweezers (Ground)
+Input Hardware: Conductive tweezers (tied to Ground)
 
-Target: Copper wire/tape (Digital Pin with Internal Pull-up)
+Target Interface: Copper wire/tape (configured via Digital Pin with Internal Pull-up)
 
-Output: 5V Active Piezo Buzzer
+Output Hardware: 5V Active Piezo Buzzer
 
-Code Base: C++/Arduino
+Language/Environment: C++ / Arduino IDE
 
-How it Works
-The logic operates on a Normally Open (NO) circuit principle:
+⚙️ How it Works
+The system operates on a Normally Open (NO) circuit principle:
 
-The digital pin is set to INPUT_PULLUP, keeping the signal HIGH by default.
+Pull-up Logic: The digital input pin is set to INPUT_PULLUP, which uses the Arduino's internal resistor to hold the signal HIGH (5V) by default.
 
-The tweezers are tied to GND.
+Grounding: The tweezers are connected directly to the common GND rail.
 
-Upon collision, the tweezers ground the digital pin, pulling the signal LOW.
+State Change: Upon collision, the tweezers ground the digital pin, pulling the signal LOW (0V).
 
-The software detects this state change and triggers the Buzzer output pin.
+Execution: The software detects this transition and immediately writes a HIGH signal to the buzzer output.
 
 The Build
 ![image0 (1)](https://github.com/user-attachments/assets/c3c2c120-b414-4e75-8279-50534c2ccfab)
@@ -68,3 +70,8 @@ void loop(){
 }
 
 ```
+
+Lessons Learned
+Signal Debouncing: During initial testing, physical contact was "noisy," causing the buzzer to oscillate. I implemented a software-based delay to ensure a clean, consistent auditory trigger.
+
+Materials Science: I experimented with various conductive materials for the track, ultimately choosing copper for its low electrical resistance and immediate responsiveness.
